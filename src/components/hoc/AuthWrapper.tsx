@@ -14,6 +14,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import {STYLES} from '../../constants/styles';
 
 /**
  * @author
@@ -25,7 +26,7 @@ const AuthScreenWrapper = ({children, showBackArrowIcon = true, ...props}) => {
   const safeAreaViewStyle = {
     flex: 1,
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: STYLES.baseColor,
     mariginHorizontal: 24,
     ...props.wrapperStyles,
   };
@@ -46,57 +47,53 @@ const AuthScreenWrapper = ({children, showBackArrowIcon = true, ...props}) => {
 
   return (
     <SafeAreaView style={{...safeAreaViewStyle}}>
-      <ImageBackground
-        source={require('../../assets/web.png')} // Replace with your image path
-        style={styles.backgroundImage}>
-        <KeyboardAvoidingView
-          enabled
-          style={{...keyboardAvoidingViewStyles}}
-          // @ts-ignore
-          behavior={Platform.OS === 'ios' ? 'padding' : null}
-          keyboardVerticalOffset={0}>
-          <TouchableWithoutFeedback
-            onPress={Keyboard.dismiss}
-            style={{...touchableWithoutFeedbackStyle}}>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentInsetAdjustmentBehavior="automatic"
+      <KeyboardAvoidingView
+        enabled
+        style={{...keyboardAvoidingViewStyles}}
+        // @ts-ignore
+        behavior={Platform.OS === 'ios' ? 'padding' : null}
+        keyboardVerticalOffset={0}>
+        <TouchableWithoutFeedback
+          onPress={Keyboard.dismiss}
+          style={{...touchableWithoutFeedbackStyle}}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentInsetAdjustmentBehavior="automatic"
+            style={{
+              ...{
+                flex: 1,
+                ...props.scrollViewStyles,
+              },
+            }}
+            contentContainerStyle={{...contentContainerStyle}}
+            keyboardShouldPersistTaps={'handled'}>
+            <View
               style={{
-                ...{
-                  flex: 1,
-                  ...props.scrollViewStyles,
-                },
-              }}
-              contentContainerStyle={{...contentContainerStyle}}
-              keyboardShouldPersistTaps={'handled'}>
-              <View
-                style={{
-                  marginBottom: 32,
-                  paddingBottom: 42,
-                  ...props.childrenWrapperStyles,
-                }}>
-                <View style={{...backArrowIconWrapperStyle}}>
-                  {showBackArrowIcon && (
-                    <Pressable
-                      hitSlop={{top: 30, left: 30, right: 30, bottom: 30}}
-                      onPress={() => {
-                        props.onBackPress
-                          ? props.onBackPress()
-                          : // @ts-ignore
-                            navigation.canGoBack() && navigation.pop();
-                      }}
-                      style={{width: 50}}>
-                      <Text>Back</Text>
-                    </Pressable>
-                  )}
-                </View>
-
-                {children}
+                marginBottom: 32,
+                paddingBottom: 42,
+                ...props.childrenWrapperStyles,
+              }}>
+              <View style={{...backArrowIconWrapperStyle}}>
+                {showBackArrowIcon && (
+                  <Pressable
+                    hitSlop={{top: 30, left: 30, right: 30, bottom: 30}}
+                    onPress={() => {
+                      props.onBackPress
+                        ? props.onBackPress()
+                        : // @ts-ignore
+                          navigation.canGoBack() && navigation.pop();
+                    }}
+                    style={{width: 50}}>
+                    <Text>Back</Text>
+                  </Pressable>
+                )}
               </View>
-            </ScrollView>
-          </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-      </ImageBackground>
+
+              {children}
+            </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

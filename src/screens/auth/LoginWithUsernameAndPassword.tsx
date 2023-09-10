@@ -1,14 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
 import * as React from 'react';
 import {useState} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {Button, InputField} from '../../components';
 import {AuthContext} from '../../../App';
 import AuthScreenWrapper from '../../components/hoc/AuthWrapper';
 // @ts-ignore
-import OhmImage from '../../assets/ohm.png';
+// import ScooperImage from '../../assets/scooper.png';
 import {authErrors} from '../../constants/auth';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {STYLES} from '../../constants/styles';
+import Scooper from '../../svgs/Scooper';
 
 export default function LoginWithEmailAndPassword() {
   const [email, setEmail] = useState('');
@@ -97,23 +99,7 @@ export default function LoginWithEmailAndPassword() {
           paddingBottom: 24,
           paddingTop: 42,
         }}>
-        <Image
-          source={OhmImage}
-          style={{
-            height: 100,
-            width: 100,
-            borderRadius: 12,
-          }}
-        />
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 32,
-            fontWeight: 700,
-            paddingTop: 12,
-          }}>
-          Welcome To OHM
-        </Text>
+        <Scooper />
       </View>
       <View
         style={{
@@ -122,12 +108,23 @@ export default function LoginWithEmailAndPassword() {
           flex: 1,
           paddingHorizontal: 24,
           paddingTop: 42,
-          borderRadius: 7,
+          borderRadius: 24,
           // backgroundColor: '#e8e8e8',
           flexGrow: 1,
-          marginHorizontal: 24,
-          // paddingBottom: 400,
+          // marginHorizontal: 24,
+          paddingBottom: 400,
         }}>
+        <Text
+          style={{
+            color: STYLES.textGreenColor,
+            fontSize: 20,
+            fontWeight: 700,
+            paddingTop: 12,
+            textAlign: 'center',
+            marginBottom: 31,
+          }}>
+          Welcome Back
+        </Text>
         {/* <Text style={styles.header}>LOGIN</Text> */}
         <InputField
           // label={'Email'}
@@ -178,9 +175,9 @@ export default function LoginWithEmailAndPassword() {
         />
         {apiError ? <Text style={styles.errorText}>{apiError}</Text> : null}
         <Button
-          color={'#294959'}
+          color={STYLES.greenColor}
           wrapperStyle={{marginTop: 16, marginBottom: 40}}
-          title="LOGIN"
+          title="Sign In"
           onPress={handleSubmit}
           processing={isApiCalling}
         />
